@@ -1,22 +1,57 @@
-"""Reproduce your Part B results. Run from the project root:
+"""Reproduce the currently implemented Part B artifacts from the project root.
+
+R2 scope is limited to the portfolio and walk-forward backtest outputs::
 
     python scripts/run_part_b.py
+
+Later phases will extend this orchestrator with sentiment, fusion, and figures.
 """
-import sys
+from __future__ import annotations
+
 import pathlib
-
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
-
-from src import data_access  # noqa: E402
+import sys
 
 
-def main():
-    eq = data_access.load_equity_prices()
-    cr = data_access.load_crypto_prices()
-    print("equities:", eq.shape, "crypto:", cr.shape)
-    # TODO: returns -> out-of-sample funds + fact sheets (Station 3)
-    # TODO: sentiment index + fusion extension (Station 3)
-    # TODO: save figures/tables under results/ for the app and the report
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from src import etl, portfolios  # noqa: E402
+
+
+def main() -> None:
+    equities = etl.load_clean_equities()
+    crypto = etl.load_clean_crypto()
+    artifacts = portfolios.build_r2_artifacts(equities, crypto)
+    paths = portfolios.write_r2_artifacts(artifacts, ROOT)
+
+    print(
+        "R2 clean inputs:",
+        f"equities={equities.shape}",
+        f"crypto={crypto.shape}",
+    )
+    for path, frame in zip(
+        paths,
+        (
+            artifacts.fund_returns,
+            artifacts.fund_weights,
+            artifacts.performance_metrics,
+        ),
+        strict=True,
+    ):
+        print(f"wrote {path.relative_to(ROOT)}: {frame.shape}")
+    print(
+        artifacts.performance_metrics[
+            [
+                "fund_name",
+                "evaluation_period",
+                "annualised_return",
+                "annualised_volatility",
+                "sharpe_ratio",
+                "maximum_drawdown",
+                "final_growth_of_1",
+            ]
+        ].to_string(index=False)
+    )
 
 
 if __name__ == "__main__":
