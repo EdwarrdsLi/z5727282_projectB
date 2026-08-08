@@ -1,10 +1,12 @@
 """Reproduce the currently implemented Part B artifacts from the project root.
 
-R3 includes the R2 portfolio outputs and the descriptive sector sentiment index::
+R4 includes the unchanged R2 portfolios, the R3 descriptive sentiment index,
+and separate equity sentiment-fusion comparison, turnover, cost, and multiplier
+sensitivity artifacts::
 
     python scripts/run_part_b.py
 
-Later phases will extend this orchestrator with fusion, figures, and the app.
+Later phases may extend this orchestrator with the app and report exhibits.
 """
 from __future__ import annotations
 
@@ -15,7 +17,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from src import etl, portfolios, sentiment  # noqa: E402
+from src import etl, fusion, portfolios, sentiment  # noqa: E402
 
 
 def main() -> None:
@@ -29,9 +31,14 @@ def main() -> None:
         sentiment_artifacts.sector_sentiment_index,
         ROOT,
     )
+    fusion_artifacts = fusion.build_r4_artifacts(
+        equities,
+        sentiment_artifacts.sector_sentiment_index,
+    )
+    fusion_paths = fusion.write_r4_artifacts(fusion_artifacts, ROOT)
 
     print(
-        "R3 clean inputs:",
+        "R4 clean inputs:",
         f"equities={equities.shape}",
         f"crypto={crypto.shape}",
         f"news={news.shape}",
@@ -69,6 +76,50 @@ def main() -> None:
                 "sharpe_ratio",
                 "maximum_drawdown",
                 "final_growth_of_1",
+            ]
+        ].to_string(index=False)
+    )
+    for path, frame in zip(
+        fusion_paths[:6],
+        (
+            fusion_artifacts.fusion_returns,
+            fusion_artifacts.fusion_weights,
+            fusion_artifacts.fusion_comparison,
+            fusion_artifacts.fusion_turnover,
+            fusion_artifacts.fusion_cost_check,
+            fusion_artifacts.fusion_sensitivity,
+        ),
+        strict=True,
+    ):
+        print(f"wrote {path.relative_to(ROOT)}: {frame.shape}")
+    print(f"wrote {fusion_paths[6].relative_to(ROOT)}")
+    print(
+        fusion_artifacts.fusion_comparison[
+            [
+                "strategy_name",
+                "evaluation_period",
+                "annualised_return",
+                "annualised_volatility",
+                "sharpe_ratio",
+                "maximum_drawdown",
+                "final_growth_of_1",
+                "total_one_way_turnover",
+                "higher_annualised_return_than_base",
+            ]
+        ].to_string(index=False)
+    )
+    print(
+        "transaction-cost schedule (one-way bps):",
+        sorted(fusion_artifacts.fusion_cost_check["cost_rate_bps_one_way"].unique()),
+    )
+    print(
+        fusion_artifacts.fusion_sensitivity[
+            [
+                "tilt_strength",
+                "approved_design",
+                "annualised_return",
+                "sharpe_ratio",
+                "total_one_way_turnover",
             ]
         ].to_string(index=False)
     )
