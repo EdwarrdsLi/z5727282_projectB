@@ -1,12 +1,12 @@
 """Reproduce the currently implemented Part B artifacts from the project root.
 
-R4 includes the unchanged R2 portfolios, the R3 descriptive sentiment index,
-and separate equity sentiment-fusion comparison, turnover, cost, and multiplier
-sensitivity artifacts::
+R5 includes the unchanged R2 portfolios, R3 descriptive sentiment index, R4
+equity sentiment-fusion evidence, and downstream report exhibits and fact sheets::
 
     python scripts/run_part_b.py
 
-Later phases may extend this orchestrator with the app and report exhibits.
+The R5 renderer reads only the precomputed R2/R3 CSVs written earlier in this
+command.  It does not rerun or alter portfolio, sentiment, or fusion rules.
 """
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from src import etl, fusion, portfolios, sentiment  # noqa: E402
+from src import etl, exhibits, fusion, portfolios, sentiment  # noqa: E402
 
 
 def main() -> None:
@@ -36,6 +36,9 @@ def main() -> None:
         sentiment_artifacts.sector_sentiment_index,
     )
     fusion_paths = fusion.write_r4_artifacts(fusion_artifacts, ROOT)
+    r5_tables, r5_paths, r5_manifest = (
+        exhibits.build_and_write_r5_from_precomputed_results(ROOT)
+    )
 
     print(
         "R4 clean inputs:",
@@ -122,6 +125,15 @@ def main() -> None:
                 "total_one_way_turnover",
             ]
         ].to_string(index=False)
+    )
+    for path in r5_paths:
+        print(f"wrote {path.relative_to(ROOT)}")
+    print(
+        "R5 report artifacts:",
+        f"exhibits={len(r5_manifest)}",
+        f"fact_sheets={len(r5_tables.fact_sheet_summary)}",
+        "student_interpretation=PENDING",
+        "final_figure_acceptance=PENDING",
     )
 
 
