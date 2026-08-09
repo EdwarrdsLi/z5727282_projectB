@@ -326,3 +326,16 @@ discover -s tests -p 'test_*.py' -v`: **42 tests passed** in 12.177 seconds.
 `git diff --check` passed with only Git's informational LF-to-CRLF warning. The
 four required assignment CSV files were present and tracked. No Git commit was
 created.
+
+## Streamlit Community Cloud theme correction - 2026-08-09
+
+After the student deployed the app to Streamlit Community Cloud, the first live
+screenshot showed that the cloud session had selected a dark theme while the
+app's custom background remained light. This made the main title and inactive
+tab text almost invisible. Codex added only `base = "light"` under a new
+`[theme]` section in `.streamlit/config.toml`. No app content, data, calculation,
+layout, chart, or interaction code was changed. The purpose is to make local and
+cloud rendering use the same light colour system.
+
+The focused app suite passed: **5 tests passed** in 1.520 seconds. The expected
+bare-mode `ScriptRunContext` warning appeared, with no app exception.
