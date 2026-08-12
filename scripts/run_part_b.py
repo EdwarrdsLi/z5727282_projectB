@@ -52,6 +52,8 @@ def main() -> None:
             portfolio_artifacts.fund_returns,
             portfolio_artifacts.fund_weights,
             portfolio_artifacts.performance_metrics,
+            portfolio_artifacts.fund_turnover,
+            portfolio_artifacts.fund_cost_check,
         ),
         strict=True,
     ):

@@ -289,10 +289,11 @@ def build_r5_tables(
             & weights["rebalance_date"].eq(latest_date)
         ].copy()
         latest = latest.sort_values(["target_weight", "ticker"], ascending=[False, True])
-        latest["holding_rank"] = np.arange(1, len(latest) + 1)
-        latest["latest_rebalance_date"] = latest_date
+        display_latest = latest.loc[latest["target_weight"].gt(1e-8)].copy()
+        display_latest["holding_rank"] = np.arange(1, len(display_latest) + 1)
+        display_latest["latest_rebalance_date"] = latest_date
         holding_frames.append(
-            latest.assign(portfolio_method=metric_row["portfolio_method"])[
+            display_latest.assign(portfolio_method=metric_row["portfolio_method"])[
                 [
                     "fund_name",
                     "portfolio_method",
@@ -318,7 +319,7 @@ def build_r5_tables(
                 "sharpe_ratio": metric_row["sharpe_ratio"],
                 "maximum_drawdown": metric_row["maximum_drawdown"],
                 "latest_rebalance_date": latest_date,
-                "current_holdings_count": len(latest),
+                "current_holdings_count": len(display_latest),
                 "current_equity_target_weight": float(by_class.get("equity", 0.0)),
                 "current_cryptocurrency_target_weight": float(
                     by_class.get("cryptocurrency", 0.0)
@@ -400,8 +401,16 @@ def _caption(fig, text: str, *, y: float = 0.012) -> None:
 
 
 def _fund_colours(fund_names: list[str]) -> dict[str, str]:
-    palette = ["#0B5CAD", "#D97706", "#2F855A", "#8B5CF6", "#C53030"]
+    palette = ["#0B5CAD", "#D97706", "#2F855A", "#8B5CF6", "#C53030", "#0891B2", "#7C3AED", "#EA580C", "#15803D"]
     return {name: palette[index % len(palette)] for index, name in enumerate(fund_names)}
+
+
+FAMILY_ORDER = ["Equity only", "Cryptocurrency only", "Combined equity + cryptocurrency"]
+METHOD_COLOURS = {
+    portfolios.EQUAL_WEIGHT: "#0B5CAD",
+    portfolios.RISK_PARITY: "#D97706",
+    portfolios.MINIMUM_VARIANCE: "#2F855A",
+}
 
 
 def _set_strict_date_limits(ax, dates: pd.Series | pd.Index) -> None:
@@ -416,56 +425,86 @@ def _set_strict_date_limits(ax, dates: pd.Series | pd.Index) -> None:
 def _plot_growth(tables: R5Tables, output_path: Path) -> None:
     import matplotlib.pyplot as plt
 
-    funds = list(tables.performance_metrics["fund_name"])
-    colours = _fund_colours(funds)
     start = tables.fund_returns["date"].min().date()
     end = tables.fund_returns["date"].max().date()
+    families = [
+        family for family in FAMILY_ORDER
+        if tables.performance_metrics["asset_family"].eq(family).any()
+    ]
     with _figure_context():
-        fig, ax = plt.subplots(figsize=(10, 5.8))
-        for fund in funds:
-            frame = tables.fund_returns.loc[
-                tables.fund_returns["fund_name"].eq(fund)
-            ].sort_values("date")
-            ax.plot(frame["date"], frame["growth_of_1"], label=fund, color=colours[fund], linewidth=2)
-        ax.axhline(1.0, color="#7B8794", linewidth=0.8, linestyle="--")
-        ax.set_title(f"Growth of $1 Across Combined Fund Methods\nHistorical OOS sample: {start} to {end}")
-        ax.set_xlabel("Observed equity trading date")
-        ax.set_ylabel("Portfolio value from $1 initial investment ($)")
-        _set_strict_date_limits(ax, tables.fund_returns["date"])
-        ax.legend(loc="best")
+        fig, axes = plt.subplots(len(families), 1, figsize=(11, 3.5 * len(families) + 0.5), sharex=False)
+        axes = np.atleast_1d(axes)
+        for ax, family in zip(axes, families, strict=True):
+            family_metrics = tables.performance_metrics.loc[
+                tables.performance_metrics["asset_family"].eq(family)
+            ]
+            family_dates: list[pd.Timestamp] = []
+            for _, row in family_metrics.iterrows():
+                fund = row["fund_name"]
+                method = row["portfolio_method"]
+                frame = tables.fund_returns.loc[
+                    tables.fund_returns["fund_name"].eq(fund)
+                ].sort_values("date")
+                family_dates.extend(frame["date"].tolist())
+                ax.plot(
+                    frame["date"], frame["growth_of_1"], label=method,
+                    color=METHOD_COLOURS[method], linewidth=1.8,
+                )
+            ax.axhline(1.0, color="#7B8794", linewidth=0.8, linestyle="--")
+            ax.set_title(family.replace(" equity + cryptocurrency", ""))
+            ax.set_ylabel("Growth of $1")
+            _set_strict_date_limits(ax, pd.DatetimeIndex(family_dates))
+            ax.legend(loc="best", ncol=3)
+        axes[-1].set_xlabel("Observed native-calendar date")
+        fig.suptitle(f"Growth of $1 Across Nine Completed Funds\nHistorical OOS evidence: {start} to {end}")
         _caption(
             fig,
             f"Source: {SOURCE_R2} Values are gross of transaction costs and fees; daily returns are compounded geometrically.",
         )
-        fig.tight_layout(rect=(0, 0.065, 1, 1))
+        fig.tight_layout(rect=(0, 0.045, 1, 0.96))
         _save_figure(fig, output_path)
 
 
 def _plot_drawdown(tables: R5Tables, output_path: Path) -> None:
     import matplotlib.pyplot as plt
 
-    funds = list(tables.performance_metrics["fund_name"])
-    colours = _fund_colours(funds)
     start = tables.fund_returns["date"].min().date()
     end = tables.fund_returns["date"].max().date()
+    families = [
+        family for family in FAMILY_ORDER
+        if tables.performance_metrics["asset_family"].eq(family).any()
+    ]
     with _figure_context():
-        fig, ax = plt.subplots(figsize=(10, 5.8))
-        for fund in funds:
-            frame = tables.fund_returns.loc[
-                tables.fund_returns["fund_name"].eq(fund)
-            ].sort_values("date")
-            ax.plot(frame["date"], frame["drawdown"] * 100.0, label=fund, color=colours[fund], linewidth=1.8)
-        ax.axhline(0.0, color="#7B8794", linewidth=0.8)
-        ax.set_title(f"Drawdown Across Combined Fund Methods\nHistorical OOS sample: {start} to {end}")
-        ax.set_xlabel("Observed equity trading date")
-        ax.set_ylabel("Drawdown from prior wealth peak (%)")
-        _set_strict_date_limits(ax, tables.fund_returns["date"])
-        ax.legend(loc="lower left")
+        fig, axes = plt.subplots(len(families), 1, figsize=(11, 3.5 * len(families) + 0.5), sharex=False)
+        axes = np.atleast_1d(axes)
+        for ax, family in zip(axes, families, strict=True):
+            family_metrics = tables.performance_metrics.loc[
+                tables.performance_metrics["asset_family"].eq(family)
+            ]
+            family_dates: list[pd.Timestamp] = []
+            for _, row in family_metrics.iterrows():
+                fund = row["fund_name"]
+                method = row["portfolio_method"]
+                frame = tables.fund_returns.loc[
+                    tables.fund_returns["fund_name"].eq(fund)
+                ].sort_values("date")
+                family_dates.extend(frame["date"].tolist())
+                ax.plot(
+                    frame["date"], frame["drawdown"] * 100.0, label=method,
+                    color=METHOD_COLOURS[method], linewidth=1.6,
+                )
+            ax.axhline(0.0, color="#7B8794", linewidth=0.8)
+            ax.set_title(family.replace(" equity + cryptocurrency", ""))
+            ax.set_ylabel("Drawdown (%)")
+            _set_strict_date_limits(ax, pd.DatetimeIndex(family_dates))
+            ax.legend(loc="lower left", ncol=3)
+        axes[-1].set_xlabel("Observed native-calendar date")
+        fig.suptitle(f"Drawdown Across Nine Completed Funds\nHistorical OOS evidence: {start} to {end}")
         _caption(
             fig,
             f"Source: {SOURCE_R2} Drawdown equals current growth of $1 divided by its running peak (including the initial $1), minus one.",
         )
-        fig.tight_layout(rect=(0, 0.065, 1, 1))
+        fig.tight_layout(rect=(0, 0.045, 1, 0.96))
         _save_figure(fig, output_path)
 
 
@@ -473,8 +512,7 @@ def _plot_weights(tables: R5Tables, output_path: Path) -> str:
     import matplotlib.pyplot as plt
 
     candidates = tables.fund_weights.loc[
-        tables.fund_weights["portfolio_method"].eq(portfolios.RISK_PARITY),
-        "fund_name",
+        tables.fund_weights["fund_name"].eq("Combined Risk Parity"), "fund_name"
     ]
     fund = candidates.iloc[0] if not candidates.empty else tables.fund_weights["fund_name"].iloc[0]
     frame = tables.fund_weights.loc[tables.fund_weights["fund_name"].eq(fund)].copy()
@@ -519,31 +557,35 @@ def _plot_risk_return(tables: R5Tables, output_path: Path) -> None:
     import matplotlib.pyplot as plt
 
     metrics = tables.performance_metrics
-    funds = list(metrics["fund_name"])
-    colours = _fund_colours(funds)
     periods = metrics["evaluation_period"].unique()
     sample = periods[0] if len(periods) == 1 else "fund-specific periods in performance table"
+    families = [family for family in FAMILY_ORDER if metrics["asset_family"].eq(family).any()]
     with _figure_context():
-        fig, ax = plt.subplots(figsize=(9, 6.0))
-        for _, row in metrics.iterrows():
-            x = float(row["annualised_volatility"]) * 100.0
-            y = float(row["annualised_return"]) * 100.0
-            ax.scatter(x, y, s=130, color=colours[row["fund_name"]], edgecolor="white", linewidth=0.8, zorder=3)
-            ax.annotate(
-                f"{row['fund_name']}\nSharpe {float(row['sharpe_ratio']):.3f}",
-                (x, y),
-                xytext=(8, 8),
-                textcoords="offset points",
-                fontsize=8.5,
-            )
-        ax.set_title(f"Annualised Return and Risk Across Combined Fund Methods\nHistorical OOS sample: {sample}")
-        ax.set_xlabel("Annualised volatility (%)")
-        ax.set_ylabel("Geometric annualised return (%)")
+        fig, axes = plt.subplots(1, len(families), figsize=(15, 5.8), squeeze=False)
+        for ax, family in zip(axes.flat, families, strict=True):
+            family_metrics = metrics.loc[metrics["asset_family"].eq(family)]
+            for _, row in family_metrics.iterrows():
+                x = float(row["annualised_volatility"]) * 100.0
+                y = float(row["annualised_return"]) * 100.0
+                method = row["portfolio_method"]
+                ax.scatter(
+                    x, y, s=135, color=METHOD_COLOURS[method],
+                    edgecolor="white", linewidth=0.8, zorder=3,
+                )
+                ax.annotate(
+                    f"{method}\nSharpe {float(row['sharpe_ratio']):.3f}",
+                    (x, y), xytext=(7, 7), textcoords="offset points", fontsize=8.2,
+                )
+            ax.set_title(family.replace(" equity + cryptocurrency", ""))
+            ax.set_xlabel("Annualised volatility (%)")
+            ax.margins(x=0.24, y=0.28)
+        axes.flat[0].set_ylabel("Geometric annualised return (%)")
+        fig.suptitle(f"Annualised Return and Risk Across Nine Completed Funds\nHistorical OOS sample: {sample}")
         _caption(
             fig,
-            f"Source: {SOURCE_R2} Volatility and Sharpe use 252 observations per year and a zero annual risk-free rate; returns are gross of transaction costs and fees.",
+            f"Source: {SOURCE_R2} Volatility and Sharpe use 252 observations per year for equity/combined funds and 365 for cryptocurrency-only funds, with a zero annual risk-free rate. Returns are gross of transaction costs and fees.",
         )
-        fig.tight_layout(rect=(0, 0.075, 1, 1))
+        fig.tight_layout(rect=(0, 0.10, 1, 0.92))
         _save_figure(fig, output_path)
 
 
@@ -645,7 +687,8 @@ def _plot_fact_sheet(
         growth_ax.plot(path["date"], path["growth_of_1"], color="#0B5CAD", linewidth=2.0)
         growth_ax.axhline(1.0, color="#7B8794", linewidth=0.8, linestyle="--")
         growth_ax.set_title("Historical growth of $1")
-        growth_ax.set_xlabel("Observed equity trading date")
+        calendar_label = "Observed native-calendar date" if int(summary_row["annualisation_days_per_year"]) == 365 else "Observed equity trading date"
+        growth_ax.set_xlabel(calendar_label)
         growth_ax.set_ylabel("Portfolio value from $1 initial investment ($)")
         _set_strict_date_limits(growth_ax, path["date"])
 
@@ -683,7 +726,7 @@ def _plot_fact_sheet(
         )
         _caption(
             fig,
-            f"Source: {SOURCE_R2} Metrics use 252 observations per year and a zero annual risk-free rate. Results are gross of transaction costs and fees. Holdings are the exact latest monthly target weights; displayed percentages are rounded to three decimals and exact weights are in results/tables/fund_fact_sheet_holdings.csv.",
+            f"Source: {SOURCE_R2} Metrics use {int(summary_row['annualisation_days_per_year'])} observations per year and a zero annual risk-free rate. Results are gross of transaction costs and fees. Holdings are the exact latest monthly target weights; displayed percentages are rounded to three decimals and exact weights are in results/tables/fund_fact_sheet_holdings.csv.",
             y=0.008,
         )
         fig.subplots_adjust(
@@ -709,11 +752,11 @@ def _manifest_rows(tables: R5Tables, weights_fund: str) -> list[dict[str, object
     pending = "PENDING - student must write and verify interpretation"
     acceptance = "PENDING - student visual review and final acceptance"
     rows = [
-        ("performance_comparison", "table", "results/tables/performance_comparison.csv", "Performance Comparison Across Combined Fund Methods", return_sample, SOURCE_R2, "Annualised return, annualised volatility, Sharpe ratio, maximum drawdown, and terminal growth of $1 for each verified R2 combined fund."),
-        ("growth_of_1", "figure", "results/figures/growth_of_1_comparison.png", "Growth of $1 Across Combined Fund Methods", return_sample, SOURCE_R2, "Daily OOS fund returns compounded geometrically from an initial value of $1."),
-        ("drawdown", "figure", "results/figures/drawdown_comparison.png", "Drawdown Across Combined Fund Methods", return_sample, SOURCE_R2, "Drawdown from the running wealth peak, including the initial $1 peak."),
+        ("performance_comparison", "table", "results/tables/performance_comparison.csv", "Performance Comparison Across Nine Completed Funds", return_sample, SOURCE_R2, "Annualised return, annualised volatility, Sharpe ratio, maximum drawdown, and terminal growth of $1 for three methods in each of three asset families."),
+        ("growth_of_1", "figure", "results/figures/growth_of_1_comparison.png", "Growth of $1 Across Nine Completed Funds", return_sample, SOURCE_R2, "Daily OOS fund returns compounded geometrically from an initial value of $1 and separated by asset family."),
+        ("drawdown", "figure", "results/figures/drawdown_comparison.png", "Drawdown Across Nine Completed Funds", return_sample, SOURCE_R2, "Drawdown from the running wealth peak, including the initial $1 peak, separated by asset family."),
         ("portfolio_weights", "figure", "results/figures/portfolio_weights_over_time_risk_parity.png", f"Target Portfolio Weights Over Time - {weights_fund}", weights_sample, SOURCE_R2, "Monthly target weights for the ten tickers with the highest mean target weight; remaining exact holdings are aggregated in the figure."),
-        ("risk_return", "figure", "results/figures/risk_return_comparison.png", "Annualised Return and Risk Across Combined Fund Methods", return_sample, SOURCE_R2, "Geometric annualised return plotted against annualised volatility; point labels report Sharpe ratios."),
+        ("risk_return", "figure", "results/figures/risk_return_comparison.png", "Annualised Return and Risk Across Nine Completed Funds", return_sample, SOURCE_R2, "Geometric annualised return plotted against annualised volatility; point labels report Sharpe ratios."),
         ("sector_sentiment", "figure", "results/figures/sector_sentiment_index.png", "Equity Sector Headline-Sentiment Index", sentiment_sample, SOURCE_R3, "Equal-weighted mean of observed ticker-day VADER compound headline scores by equity sector; missing sector-days remain gaps."),
     ]
     for _, row in tables.fact_sheet_summary.iterrows():

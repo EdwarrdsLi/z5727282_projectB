@@ -7,6 +7,13 @@
 Part B: funds, sentiment, and the app (DFF Stations 3-4). This folder is also your
 public GitHub repository; the app entrypoint is streamlit_app.py at the root.
 
+The completed fund shelf contains nine walk-forward out-of-sample funds: Equity,
+Cryptocurrency and Combined universes, each implemented with Equal Weight, Risk
+Parity and long-only Minimum Variance. Equity/Combined funds use 252-observation
+rolling windows and annualisation; cryptocurrency-only funds use 365 observations
+on their native seven-day calendar. Monthly target turnover and illustrative 0/10
+bps one-way transaction-cost checks are saved under `results/tables/`.
+
 ## How to run
 
     pip install -r requirements.txt -r requirements-dev.txt   # dev adds nltk (VADER)

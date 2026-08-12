@@ -7,6 +7,7 @@ committed, precomputed artifacts under ``results/``.
 from __future__ import annotations
 
 from pathlib import Path
+import re
 from typing import Mapping
 
 import pandas as pd
@@ -22,6 +23,8 @@ APP_CSV_PATHS = {
     "fusion_weights": "results/data/sentiment_fusion_weights.csv",
     "performance_metrics": "results/tables/performance_metrics.csv",
     "performance_comparison": "results/tables/performance_comparison.csv",
+    "fund_turnover": "results/tables/fund_turnover.csv",
+    "fund_cost_check": "results/tables/fund_transaction_cost_check.csv",
     "fact_sheet_summary": "results/tables/fund_fact_sheet_summary.csv",
     "fact_sheet_holdings": "results/tables/fund_fact_sheet_holdings.csv",
     "fusion_comparison": "results/tables/sentiment_fusion_comparison.csv",
@@ -30,14 +33,33 @@ APP_CSV_PATHS = {
     "fusion_sensitivity": "results/tables/sentiment_multiplier_sensitivity.csv",
 }
 
+FUND_NAMES = (
+    "Equity Equal Weight",
+    "Equity Risk Parity",
+    "Equity Minimum Variance",
+    "Cryptocurrency Equal Weight",
+    "Cryptocurrency Risk Parity",
+    "Cryptocurrency Minimum Variance",
+    "Combined Equal Weight",
+    "Combined Risk Parity",
+    "Combined Minimum Variance",
+)
+
+
+def _slug(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
+
+
 APP_FIGURE_PATHS = {
     "growth": "results/figures/growth_of_1_comparison.png",
     "drawdown": "results/figures/drawdown_comparison.png",
     "risk_return": "results/figures/risk_return_comparison.png",
     "weights": "results/figures/portfolio_weights_over_time_risk_parity.png",
     "sentiment": "results/figures/sector_sentiment_index.png",
-    "fact_sheet_equal_weight": "results/figures/fund_fact_sheet_combined_equal_weight.png",
-    "fact_sheet_risk_parity": "results/figures/fund_fact_sheet_combined_risk_parity.png",
+    **{
+        f"fact_sheet_{_slug(fund)}": f"results/figures/fund_fact_sheet_{_slug(fund)}.png"
+        for fund in FUND_NAMES
+    },
 }
 
 REQUIRED_COLUMNS = {
@@ -71,6 +93,16 @@ REQUIRED_COLUMNS = {
         "fund_name", "sample_period", "annualised_return",
         "annualised_volatility", "sharpe_ratio", "maximum_drawdown",
         "final_growth_of_1",
+    },
+    "fund_turnover": {
+        "rebalance_date", "fund_name", "asset_family", "portfolio_method",
+        "initial_establishment", "one_way_turnover",
+    },
+    "fund_cost_check": {
+        "fund_name", "asset_family", "portfolio_method", "cost_rate_bps_one_way",
+        "gross_annualised_return", "net_annualised_return", "gross_sharpe_ratio",
+        "net_sharpe_ratio", "gross_final_growth_of_1", "net_final_growth_of_1",
+        "total_one_way_turnover",
     },
     "fact_sheet_summary": {
         "fund_name", "sample_period", "final_growth_of_1", "annualised_return",
@@ -116,6 +148,7 @@ DATE_COLUMNS = {
     "performance_metrics": (
         "evaluation_start_date", "evaluation_end_date", "latest_rebalance_date",
     ),
+    "fund_turnover": ("rebalance_date",),
     "fact_sheet_summary": ("latest_rebalance_date",),
     "fact_sheet_holdings": ("latest_rebalance_date",),
     "fusion_comparison": ("evaluation_start_date", "evaluation_end_date"),
@@ -166,10 +199,14 @@ def load_app_data(repository_root: str | Path) -> dict[str, pd.DataFrame]:
             raise FileNotFoundError(f"Required precomputed app figure is missing: {relative_path}")
 
     fund_names = set(loaded["performance_metrics"]["fund_name"])
+    if fund_names != set(FUND_NAMES):
+        raise ValueError("The deployed fund shelf must contain the approved nine funds")
     if fund_names != set(loaded["fund_returns"]["fund_name"]):
         raise ValueError("Fund names do not match between returns and performance metrics")
     if fund_names != set(loaded["fact_sheet_summary"]["fund_name"]):
         raise ValueError("Fund names do not match between metrics and fact sheets")
+    if fund_names != set(loaded["fund_cost_check"]["fund_name"]):
+        raise ValueError("Fund names do not match between metrics and cost checks")
     if loaded["fund_returns"].duplicated(["date", "fund_name"]).any():
         raise ValueError("fund_returns.csv contains duplicate fund-date rows")
     if loaded["sector_sentiment"].duplicated(["date", "sector"]).any():
@@ -188,6 +225,13 @@ def figure_paths(repository_root: str | Path) -> dict[str, Path]:
     }
 
 
+def fact_sheet_figure_key(fund_name: str) -> str:
+    """Return the validated figure-map key for one completed fund."""
+    if fund_name not in FUND_NAMES:
+        raise ValueError(f"Unknown completed fund: {fund_name}")
+    return f"fact_sheet_{_slug(fund_name)}"
+
+
 def historical_allocation_scenarios(
     fund_returns: pd.DataFrame,
     investment_amount: float,
@@ -201,15 +245,22 @@ def historical_allocation_scenarios(
     """
     if not pd.notna(investment_amount) or investment_amount <= 0:
         raise ValueError("investment_amount must be positive and finite")
+    available_funds = set(fund_returns["fund_name"])
+    if not custom_weights or not set(custom_weights).issubset(available_funds):
+        raise ValueError("Custom allocation contains an unavailable fund")
+    funds = list(custom_weights)
     pivot = (
-        fund_returns.pivot(index="date", columns="fund_name", values="growth_of_1")
+        fund_returns.loc[fund_returns["fund_name"].isin(funds)]
+        .pivot(index="date", columns="fund_name", values="growth_of_1")
         .sort_index()
+        .reindex(columns=funds)
+        .dropna(how="any")
     )
-    if pivot.isna().any().any():
-        raise ValueError("Completed funds do not share a complete historical sample")
-    funds = list(pivot.columns)
-    if set(custom_weights) != set(funds):
-        raise ValueError("Custom allocation must specify every completed fund exactly once")
+    if pivot.empty:
+        raise ValueError("Selected funds do not share an overlapping historical sample")
+    # Rebase at the first common observation so cross-calendar comparisons all
+    # begin at the entered investment amount.
+    pivot = pivot.divide(pivot.iloc[0], axis="columns")
     weights = pd.Series(custom_weights, dtype=float).reindex(funds)
     if not weights.map(pd.notna).all() or (weights < 0).any():
         raise ValueError("Custom allocation weights must be finite and non-negative")

@@ -6,7 +6,12 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src.app_data import figure_paths, historical_allocation_scenarios, load_app_data
+from src.app_data import (
+    fact_sheet_figure_key,
+    figure_paths,
+    historical_allocation_scenarios,
+    load_app_data,
+)
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent
@@ -83,15 +88,20 @@ except (FileNotFoundError, ValueError, pd.errors.ParserError) as error:
     st.code(str(error))
     st.stop()
 
-metrics = data["performance_metrics"].sort_values("fund_name").reset_index(drop=True)
+family_order = ["Equity only", "Cryptocurrency only", "Combined equity + cryptocurrency"]
+method_order = ["Equal Weight", "Risk Parity", "Minimum Variance"]
+metrics = data["performance_metrics"].copy()
+metrics["asset_family"] = pd.Categorical(metrics["asset_family"], family_order, ordered=True)
+metrics["portfolio_method"] = pd.Categorical(metrics["portfolio_method"], method_order, ordered=True)
+metrics = metrics.sort_values(["asset_family", "portfolio_method"]).reset_index(drop=True)
 sample_start = metrics["evaluation_start_date"].min().date()
 sample_end = metrics["evaluation_end_date"].max().date()
 
 st.markdown('<div class="hero-kicker">Historical fund evidence</div>', unsafe_allow_html=True)
 st.title("Systematic Fund Explorer")
 st.markdown(
-    '<div class="hero-copy">Compare two completed combined equity-and-cryptocurrency '
-    'fund methods, inspect their fact sheets, test a hypothetical fund allocation, '
+    '<div class="hero-copy">Compare nine completed systematic funds across equities, '
+    'cryptocurrencies and a combined universe, inspect their fact sheets, test a hypothetical allocation, '
     'and explore equity headline sentiment.</div>',
     unsafe_allow_html=True,
 )
@@ -112,15 +122,54 @@ tab_compare, tab_facts, tab_allocation, tab_analytics, tab_sentiment, tab_notes 
 with tab_compare:
     st.subheader("Compare completed fund methods")
     st.write(
-        "Both completed funds combine 50 equities and 10 cryptocurrencies on the observed "
-        "equity trading calendar. Metrics use the same historical OOS dates."
+        "Each asset family is evaluated with Equal Weight, Risk Parity and long-only "
+        "Minimum Variance. Choose a family for a like-for-like comparison on its native calendar."
     )
-    st.dataframe(_display_performance(metrics), width="stretch", hide_index=True)
+    selected_family = st.selectbox(
+        "Asset family",
+        family_order,
+        format_func=lambda value: value.replace(" equity + cryptocurrency", ""),
+        key="comparison_family",
+    )
+    comparison_metrics = metrics.loc[metrics["asset_family"].eq(selected_family)].copy()
+    st.dataframe(_display_performance(comparison_metrics), width="stretch", hide_index=True)
     st.image(figures["growth"], width="stretch")
     st.caption(
         "The lines compound the saved daily OOS fund returns. Returns are gross of "
         "transaction costs, management fees and taxes."
     )
+    with st.expander("Open turnover and transaction-cost sensitivity"):
+        selected_cost = st.select_slider(
+            "Illustrative one-way transaction cost",
+            options=sorted(data["fund_cost_check"]["cost_rate_bps_one_way"].unique()),
+            value=10.0,
+            format_func=lambda value: f"{value:g} bps",
+            key="fund_cost_rate",
+        )
+        cost_rows = data["fund_cost_check"].loc[
+            data["fund_cost_check"]["asset_family"].eq(selected_family)
+            & data["fund_cost_check"]["cost_rate_bps_one_way"].eq(selected_cost),
+            [
+                "fund_name", "net_annualised_return", "net_sharpe_ratio",
+                "net_final_growth_of_1", "total_one_way_turnover",
+            ],
+        ].copy()
+        cost_rows.columns = [
+            "Fund", "Net annualised return", "Net Sharpe ratio",
+            "Net growth of $1", "Total one-way turnover",
+        ]
+        st.dataframe(
+            cost_rows.style.format(
+                {
+                    "Net annualised return": "{:.2%}",
+                    "Net Sharpe ratio": "{:.3f}",
+                    "Net growth of $1": "${:.3f}",
+                    "Total one-way turnover": "{:.3f}",
+                }
+            ),
+            width="stretch",
+            hide_index=True,
+        )
 
 with tab_facts:
     st.subheader("Fund fact sheets and current target holdings")
@@ -141,10 +190,7 @@ with tab_facts:
         st.metric("Sharpe ratio", f"{fact['sharpe_ratio']:.3f}", width=220)
         st.metric("Maximum drawdown", _percent(fact["maximum_drawdown"]), width=220)
 
-    fact_sheet_key = (
-        "fact_sheet_equal_weight" if selected_fund == "Combined Equal Weight"
-        else "fact_sheet_risk_parity"
-    )
+    fact_sheet_key = fact_sheet_figure_key(selected_fund)
     st.image(figures[fact_sheet_key], width="stretch")
 
     holdings = data["fact_sheet_holdings"].loc[
@@ -185,10 +231,23 @@ with tab_facts:
 with tab_allocation:
     st.subheader("Historical allocation lab")
     st.write(
-        "Enter an amount and split it across the two completed funds. The comparison "
-        "applies the chosen split at the start of the saved OOS sample and does not "
+        "Choose any two completed funds, enter an amount and split it between them. The comparison "
+        "rebases both paths at their first common saved observation and does not "
         "rebalance between funds afterward."
     )
+    selector_one, selector_two = st.columns(2)
+    fund_names = metrics["fund_name"].astype(str).tolist()
+    with selector_one:
+        first_fund = st.selectbox(
+            "First fund", fund_names, index=fund_names.index("Combined Equal Weight")
+        )
+    second_options = [fund for fund in fund_names if fund != first_fund]
+    default_second = (
+        second_options.index("Combined Risk Parity")
+        if "Combined Risk Parity" in second_options else 0
+    )
+    with selector_two:
+        second_fund = st.selectbox("Second fund", second_options, index=default_second)
     amount_column, split_column = st.columns([1, 2])
     with amount_column:
         investment_amount = st.number_input(
@@ -198,10 +257,9 @@ with tab_allocation:
             value=10_000.0,
             step=500.0,
         )
-    fund_names = metrics["fund_name"].tolist()
     with split_column:
         first_weight_percent = st.slider(
-            f"Allocation to {fund_names[0]}",
+            f"Allocation to {first_fund}",
             min_value=0,
             max_value=100,
             value=50,
@@ -209,12 +267,12 @@ with tab_allocation:
             format="%d%%",
         )
         st.caption(
-            f"{fund_names[0]}: {first_weight_percent}% · "
-            f"{fund_names[1]}: {100 - first_weight_percent}%"
+            f"{first_fund}: {first_weight_percent}% · "
+            f"{second_fund}: {100 - first_weight_percent}%"
         )
     custom_weights = {
-        fund_names[0]: first_weight_percent / 100.0,
-        fund_names[1]: 1.0 - first_weight_percent / 100.0,
+        first_fund: first_weight_percent / 100.0,
+        second_fund: 1.0 - first_weight_percent / 100.0,
     }
     allocation_paths, allocation_summary = historical_allocation_scenarios(
         data["fund_returns"], investment_amount, custom_weights
@@ -227,11 +285,12 @@ with tab_allocation:
     summary_for_display["Historical change"] = summary_for_display["Historical change"].map(_currency)
     summary_for_display["Historical return"] = summary_for_display["Historical return"].map(_percent)
     st.dataframe(summary_for_display, width="stretch", hide_index=True)
-    st.line_chart(allocation_paths, x_label="Observed equity trading date", y_label="Historical value ($)")
+    st.line_chart(allocation_paths, x_label="Common observed date", y_label="Historical value ($)")
     st.caption(
         "Values are hypothetical and use the saved gross OOS growth paths from "
-        f"{sample_start} to {sample_end}. The first charted value includes the first "
-        "saved daily return. No fees, taxes, cash flows, or fund-level rebalancing are applied."
+        f"{allocation_paths.index.min().date()} to {allocation_paths.index.max().date()}. "
+        "Both selected paths start at the entered amount. No fees, taxes, cash flows, "
+        "or fund-level rebalancing are applied."
     )
 
 with tab_analytics:
@@ -248,7 +307,7 @@ with tab_analytics:
         st.image(figures["weights"], width="stretch")
     st.caption(
         "All figures are generated from verified precomputed artifacts. The weight figure "
-        "shows monthly Risk Parity target weights; exact holdings for both funds are in the fact sheets."
+        "shows monthly Combined Risk Parity target weights; exact holdings for all nine funds are in the fact sheets."
     )
 
 with tab_sentiment:
@@ -426,15 +485,16 @@ with tab_sentiment:
 
 with tab_notes:
     st.subheader("Method notes and limits")
-    settings = metrics.iloc[0]
+    settings = metrics.loc[metrics["fund_name"].astype(str).eq("Combined Equal Weight")].iloc[0]
     st.markdown(
         f"""
-        - **Evidence period:** {sample_start} to {sample_end}; 753 observed equity trading days.
-        - **Design:** historical walk-forward out-of-sample backtest using a rolling 252-observation estimation window.
+        - **Fund shelf:** nine completed funds: three asset families × three portfolio methods.
+        - **Evidence period:** {sample_start} to {sample_end} for equity-calendar and combined funds; cryptocurrency-only funds retain their native seven-day calendar.
+        - **Design:** historical walk-forward out-of-sample backtests using rolling 252-observation windows for equity and combined funds, and 365 observations for cryptocurrency-only funds.
         - **Rebalancing:** {settings['rebalance_rule']}.
         - **Constraints:** {settings['constraints']}.
-        - **Annualisation:** {int(settings['annualisation_days_per_year'])} observations per year for these combined equity-calendar funds.
-        - **Saved return basis:** zero annual risk-free rate and gross of transaction costs, management fees and taxes.
+        - **Annualisation:** 252 observations per year for equity and combined funds; 365 for cryptocurrency-only funds.
+        - **Saved return basis:** zero annual risk-free rate and gross of transaction costs, management fees and taxes; an illustrative 10 bps one-way cost sensitivity is reported separately.
         - **Sentiment:** supplied equity headlines only; same-day or next-trading-day mapping in the build, and a one-observed-day lag for fusion decisions.
         """
     )

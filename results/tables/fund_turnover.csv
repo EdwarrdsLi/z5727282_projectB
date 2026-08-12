@@ -1,0 +1,325 @@
+rebalance_date,fund_name,asset_family,portfolio_method,initial_establishment,one_way_turnover
+2021-01-04,Equity Equal Weight,Equity only,Equal Weight,True,0.0
+2021-02-01,Equity Equal Weight,Equity only,Equal Weight,False,0.025333838004933648
+2021-03-01,Equity Equal Weight,Equity only,Equal Weight,False,0.048080909566088764
+2021-04-01,Equity Equal Weight,Equity only,Equal Weight,False,0.02334629231451527
+2021-05-03,Equity Equal Weight,Equity only,Equal Weight,False,0.021274224268830265
+2021-06-01,Equity Equal Weight,Equity only,Equal Weight,False,0.02092425387593157
+2021-07-01,Equity Equal Weight,Equity only,Equal Weight,False,0.02667405773322292
+2021-08-02,Equity Equal Weight,Equity only,Equal Weight,False,0.022290182207067667
+2021-09-01,Equity Equal Weight,Equity only,Equal Weight,False,0.018564143772417666
+2021-10-01,Equity Equal Weight,Equity only,Equal Weight,False,0.024861097677564545
+2021-11-01,Equity Equal Weight,Equity only,Equal Weight,False,0.030892860165321348
+2021-12-01,Equity Equal Weight,Equity only,Equal Weight,False,0.03273590616817381
+2022-01-03,Equity Equal Weight,Equity only,Equal Weight,False,0.022483032262101882
+2022-02-01,Equity Equal Weight,Equity only,Equal Weight,False,0.040883125538087
+2022-03-01,Equity Equal Weight,Equity only,Equal Weight,False,0.028415889189891498
+2022-04-01,Equity Equal Weight,Equity only,Equal Weight,False,0.03348463276404172
+2022-05-02,Equity Equal Weight,Equity only,Equal Weight,False,0.036011266897346926
+2022-06-01,Equity Equal Weight,Equity only,Equal Weight,False,0.029982873992492786
+2022-07-01,Equity Equal Weight,Equity only,Equal Weight,False,0.035731082777456694
+2022-08-01,Equity Equal Weight,Equity only,Equal Weight,False,0.027947302729232255
+2022-09-01,Equity Equal Weight,Equity only,Equal Weight,False,0.021912206328306094
+2022-10-03,Equity Equal Weight,Equity only,Equal Weight,False,0.02885178076375974
+2022-11-01,Equity Equal Weight,Equity only,Equal Weight,False,0.035976418248330554
+2022-12-01,Equity Equal Weight,Equity only,Equal Weight,False,0.028513568246996975
+2023-01-03,Equity Equal Weight,Equity only,Equal Weight,False,0.022242937945455458
+2023-02-01,Equity Equal Weight,Equity only,Equal Weight,False,0.03226719250383653
+2023-03-01,Equity Equal Weight,Equity only,Equal Weight,False,0.02025530215394363
+2023-04-03,Equity Equal Weight,Equity only,Equal Weight,False,0.028673054808548763
+2023-05-01,Equity Equal Weight,Equity only,Equal Weight,False,0.019335278615591082
+2023-06-01,Equity Equal Weight,Equity only,Equal Weight,False,0.031073954582808167
+2023-07-03,Equity Equal Weight,Equity only,Equal Weight,False,0.019012056781482843
+2023-08-01,Equity Equal Weight,Equity only,Equal Weight,False,0.02208908893646035
+2023-09-01,Equity Equal Weight,Equity only,Equal Weight,False,0.021630116488075425
+2023-10-02,Equity Equal Weight,Equity only,Equal Weight,False,0.019764388141731093
+2023-11-01,Equity Equal Weight,Equity only,Equal Weight,False,0.022386155925351224
+2023-12-01,Equity Equal Weight,Equity only,Equal Weight,False,0.029474394557912058
+2021-01-04,Equity Risk Parity,Equity only,Risk Parity,True,0.0
+2021-02-01,Equity Risk Parity,Equity only,Risk Parity,False,0.024270140492817796
+2021-03-01,Equity Risk Parity,Equity only,Risk Parity,False,0.04313072023928755
+2021-04-01,Equity Risk Parity,Equity only,Risk Parity,False,0.05880627680199356
+2021-05-03,Equity Risk Parity,Equity only,Risk Parity,False,0.04474875980610739
+2021-06-01,Equity Risk Parity,Equity only,Risk Parity,False,0.037318820720955034
+2021-07-01,Equity Risk Parity,Equity only,Risk Parity,False,0.04523396157478227
+2021-08-02,Equity Risk Parity,Equity only,Risk Parity,False,0.01963716627869885
+2021-09-01,Equity Risk Parity,Equity only,Risk Parity,False,0.019061804540030015
+2021-10-01,Equity Risk Parity,Equity only,Risk Parity,False,0.03118459758388157
+2021-11-01,Equity Risk Parity,Equity only,Risk Parity,False,0.03414457829953401
+2021-12-01,Equity Risk Parity,Equity only,Risk Parity,False,0.0488463881256078
+2022-01-03,Equity Risk Parity,Equity only,Risk Parity,False,0.027176584130262436
+2022-02-01,Equity Risk Parity,Equity only,Risk Parity,False,0.03637498789270618
+2022-03-01,Equity Risk Parity,Equity only,Risk Parity,False,0.0342598751441098
+2022-04-01,Equity Risk Parity,Equity only,Risk Parity,False,0.023655579624347136
+2022-05-02,Equity Risk Parity,Equity only,Risk Parity,False,0.041727704667535045
+2022-06-01,Equity Risk Parity,Equity only,Risk Parity,False,0.0448869008821902
+2022-07-01,Equity Risk Parity,Equity only,Risk Parity,False,0.038147092351781875
+2022-08-01,Equity Risk Parity,Equity only,Risk Parity,False,0.035102744527254134
+2022-09-01,Equity Risk Parity,Equity only,Risk Parity,False,0.01921435201853328
+2022-10-03,Equity Risk Parity,Equity only,Risk Parity,False,0.03249291303607382
+2022-11-01,Equity Risk Parity,Equity only,Risk Parity,False,0.034212227710151394
+2022-12-01,Equity Risk Parity,Equity only,Risk Parity,False,0.03630589724129373
+2023-01-03,Equity Risk Parity,Equity only,Risk Parity,False,0.02291768536506031
+2023-02-01,Equity Risk Parity,Equity only,Risk Parity,False,0.0315702588194809
+2023-03-01,Equity Risk Parity,Equity only,Risk Parity,False,0.01734457170050288
+2023-04-03,Equity Risk Parity,Equity only,Risk Parity,False,0.02353395162075376
+2023-05-01,Equity Risk Parity,Equity only,Risk Parity,False,0.02101853187036965
+2023-06-01,Equity Risk Parity,Equity only,Risk Parity,False,0.026966968674561925
+2023-07-03,Equity Risk Parity,Equity only,Risk Parity,False,0.02728045947907513
+2023-08-01,Equity Risk Parity,Equity only,Risk Parity,False,0.02314488378311479
+2023-09-01,Equity Risk Parity,Equity only,Risk Parity,False,0.020637209923698458
+2023-10-02,Equity Risk Parity,Equity only,Risk Parity,False,0.01761978011869226
+2023-11-01,Equity Risk Parity,Equity only,Risk Parity,False,0.02707004240629287
+2023-12-01,Equity Risk Parity,Equity only,Risk Parity,False,0.04112165677423023
+2021-01-04,Equity Minimum Variance,Equity only,Minimum Variance,True,0.0
+2021-02-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.052600525208927884
+2021-03-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.08261117044237101
+2021-04-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.2871193469898854
+2021-05-03,Equity Minimum Variance,Equity only,Minimum Variance,False,0.19324241928217462
+2021-06-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.10838044961988615
+2021-07-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.19905292131612703
+2021-08-02,Equity Minimum Variance,Equity only,Minimum Variance,False,0.0721113758786632
+2021-09-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.05237703069207166
+2021-10-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.17405641180588657
+2021-11-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.19501284893517704
+2021-12-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.18658503653638037
+2022-01-03,Equity Minimum Variance,Equity only,Minimum Variance,False,0.12085782343439767
+2022-02-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.26689814809904383
+2022-03-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.2580954849366906
+2022-04-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.13739046482726047
+2022-05-02,Equity Minimum Variance,Equity only,Minimum Variance,False,0.2225669340229839
+2022-06-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.23444535662818336
+2022-07-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.12652928999151186
+2022-08-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.07810023871328604
+2022-09-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.1569915234853932
+2022-10-03,Equity Minimum Variance,Equity only,Minimum Variance,False,0.17287656548547908
+2022-11-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.15130771521182795
+2022-12-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.16051965706084648
+2023-01-03,Equity Minimum Variance,Equity only,Minimum Variance,False,0.06450659146253919
+2023-02-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.0730700491003201
+2023-03-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.1054354642000233
+2023-04-03,Equity Minimum Variance,Equity only,Minimum Variance,False,0.09522166784097083
+2023-05-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.09495660393692155
+2023-06-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.1987410085500046
+2023-07-03,Equity Minimum Variance,Equity only,Minimum Variance,False,0.14325430597585542
+2023-08-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.05062808982622734
+2023-09-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.10805335676143302
+2023-10-02,Equity Minimum Variance,Equity only,Minimum Variance,False,0.1038599251199861
+2023-11-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.15660190773542348
+2023-12-01,Equity Minimum Variance,Equity only,Minimum Variance,False,0.1382534908221376
+2021-01-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,True,0.0
+2021-02-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.14434551287242162
+2021-03-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.15533662429037423
+2021-04-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.07270729548497028
+2021-05-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.144162226528111
+2021-06-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.16360572693964284
+2021-07-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.049037319642105046
+2021-08-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.03183434363540118
+2021-09-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.07355296539279194
+2021-10-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.04128786692208686
+2021-11-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.045124259763769936
+2021-12-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.03570105123091291
+2022-01-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.02441094978075995
+2022-02-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.02102647982226584
+2022-03-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.04051822865186431
+2022-04-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.04004075397274754
+2022-05-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.04440722090590186
+2022-06-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.07635119632023683
+2022-07-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.062260904092131156
+2022-08-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.10515057503004752
+2022-09-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.021219935025505156
+2022-10-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.057718278624622144
+2022-11-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.030994651938395193
+2022-12-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.06706297554845737
+2023-01-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.03730462590512456
+2023-02-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.034601917224557785
+2023-03-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.02330339261562521
+2023-04-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.0596507208568145
+2023-05-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.031202949289222327
+2023-06-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.030471567941276263
+2023-07-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.12587665668300396
+2023-08-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.0757542352719527
+2023-09-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.0387549438622886
+2023-10-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.021186353438420992
+2023-11-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.024196764756997544
+2023-12-01,Cryptocurrency Equal Weight,Cryptocurrency only,Equal Weight,False,0.03213161530738908
+2021-01-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,True,0.0
+2021-02-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.1582053682273591
+2021-03-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.13700596163602688
+2021-04-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.07879233161182009
+2021-05-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.1568152145831099
+2021-06-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.1800443769280619
+2021-07-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.05410533403414147
+2021-08-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.0390898493482848
+2021-09-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.07446963667354427
+2021-10-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.04596659624356248
+2021-11-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.05059779832238125
+2021-12-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.0408789078046502
+2022-01-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.02326640661218391
+2022-02-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.029224800981514636
+2022-03-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.04272660886762113
+2022-04-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.036101218143700264
+2022-05-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.05104018707649008
+2022-06-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.0932176893376333
+2022-07-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.05741831892473917
+2022-08-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.11250136160218055
+2022-09-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.026070336501068173
+2022-10-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.060681269700575476
+2022-11-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.02835255682457828
+2022-12-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.061702450736175016
+2023-01-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.03710022471153629
+2023-02-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.03933531498985968
+2023-03-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.027890057736280893
+2023-04-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.06083306123983752
+2023-05-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.03404566253541975
+2023-06-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.023908019551429495
+2023-07-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.1364816452365113
+2023-08-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.12463089264353905
+2023-09-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.03717165541700241
+2023-10-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.030773704517820057
+2023-11-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.026716406221977844
+2023-12-01,Cryptocurrency Risk Parity,Cryptocurrency only,Risk Parity,False,0.0323407819428559
+2021-01-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,True,0.0
+2021-02-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.10863192088489891
+2021-03-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.047567256783873565
+2021-04-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.06951688937211171
+2021-05-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.22008690956644328
+2021-06-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.2840986184278962
+2021-07-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.027969871448746037
+2021-08-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.012166402240507544
+2021-09-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.030824834530922662
+2021-10-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.05878580673030764
+2021-11-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.0397313042628002
+2021-12-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.02620218596768424
+2022-01-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.014820642428787945
+2022-02-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.01785345375062629
+2022-03-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.03146378917951842
+2022-04-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.007818959094741132
+2022-05-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.06081118604158944
+2022-06-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.0879937117035394
+2022-07-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.003622086404352784
+2022-08-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.034403621585494704
+2022-09-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.03741849216479341
+2022-10-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.13470020328710863
+2022-11-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.020814252474072734
+2022-12-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.06504622162213228
+2023-01-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.01354266478340671
+2023-02-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.07314272105654038
+2023-03-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.06744583740614268
+2023-04-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.05517713758426932
+2023-05-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.06883211256136379
+2023-06-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.23890650039778719
+2023-07-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.09482713991781432
+2023-08-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.11831744440206025
+2023-09-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.02413057370980151
+2023-10-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.09461473169791709
+2023-11-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.06749043203027391
+2023-12-01,Cryptocurrency Minimum Variance,Cryptocurrency only,Minimum Variance,False,0.10136292766872054
+2021-01-04,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,True,0.0
+2021-02-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.04573546134831942
+2021-03-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.06775775218129512
+2021-04-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.03509260108878923
+2021-05-03,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.0747582408704302
+2021-06-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.04172174268939164
+2021-07-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.04903974259352425
+2021-08-02,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.024451784671162956
+2021-09-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.04060946333062587
+2021-10-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.03429572469883434
+2021-11-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.03517030755448468
+2021-12-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.035916057174224636
+2022-01-03,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.03913507795630396
+2022-02-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.054608127410295845
+2022-03-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.04159250723406857
+2022-04-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.03297601930324239
+2022-05-02,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.04480745837108996
+2022-06-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.0668727761648293
+2022-07-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.043922040067420696
+2022-08-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.038019354849486424
+2022-09-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.02633493974704463
+2022-10-03,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.03977352362301022
+2022-11-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.038868377968473616
+2022-12-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.034334752832109655
+2023-01-03,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.02870718149354705
+2023-02-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.036508992597519926
+2023-03-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.02130180502200508
+2023-04-03,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.03468938046122183
+2023-05-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.02171490049579822
+2023-06-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.031125691028957972
+2023-07-03,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.0441462957438522
+2023-08-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.030509156409318915
+2023-09-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.03277279687160013
+2023-10-02,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.026668034707894386
+2023-11-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.02332384128745303
+2023-12-01,Combined Equal Weight,Combined equity + cryptocurrency,Equal Weight,False,0.032786079238401884
+2021-01-04,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,True,0.0
+2021-02-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.042088186294008456
+2021-03-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.06266184162437842
+2021-04-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.07670201195011474
+2021-05-03,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.07731740987573564
+2021-06-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.048918698406157514
+2021-07-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.04770271068607585
+2021-08-02,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.02044499784078052
+2021-09-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.02591136127313789
+2021-10-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03190680202467456
+2021-11-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03753426269504093
+2021-12-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.048574603003243226
+2022-01-03,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.02808618986817998
+2022-02-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.04026014764511763
+2022-03-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03758976791593947
+2022-04-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.022713796632811714
+2022-05-02,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.04540255173894527
+2022-06-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.056271281199972066
+2022-07-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.044198311736308865
+2022-08-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.039625315948641285
+2022-09-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.021173072006299577
+2022-10-03,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03364139441655445
+2022-11-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03800965016121302
+2022-12-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03769429609090981
+2023-01-03,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.026800391581621136
+2023-02-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03392682053679701
+2023-03-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.017860689653488852
+2023-04-03,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.027728985543027447
+2023-05-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.02232557702517784
+2023-06-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.028950210459828145
+2023-07-03,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03972283699292109
+2023-08-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03201294973341734
+2023-09-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.026590322717369448
+2023-10-02,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.022647600847787726
+2023-11-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.03071730425985674
+2023-12-01,Combined Risk Parity,Combined equity + cryptocurrency,Risk Parity,False,0.04816050681179844
+2021-01-04,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,True,0.0
+2021-02-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.05260064289383626
+2021-03-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.08261028090933682
+2021-04-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.28827596681514406
+2021-05-03,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.19342752790956202
+2021-06-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.10792833406674503
+2021-07-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.1983105681623164
+2021-08-02,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.07321756063063314
+2021-09-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.05334959596460487
+2021-10-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.18507694899834953
+2021-11-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.1950169645939034
+2021-12-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.1865890843741915
+2022-01-03,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.12085724576465616
+2022-02-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.2668989449929768
+2022-03-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.2580942266748473
+2022-04-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.13669413614270354
+2022-05-02,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.22294970126050698
+2022-06-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.23653801413822578
+2022-07-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.12647097381110212
+2022-08-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.07810134107218909
+2022-09-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.1569933727829199
+2022-10-03,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.1728778742918594
+2022-11-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.14971162414804626
+2022-12-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.16185950942958977
+2023-01-03,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.06632156478397712
+2023-02-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.07361123291456027
+2023-03-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.10883056928812668
+2023-04-03,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.09522235518432626
+2023-05-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.09495812375988943
+2023-06-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.19873838376769645
+2023-07-03,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.1564163186347914
+2023-08-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.04569919851962186
+2023-09-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.11149130026283313
+2023-10-02,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.11035289532297873
+2023-11-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.1662220274631608
+2023-12-01,Combined Minimum Variance,Combined equity + cryptocurrency,Minimum Variance,False,0.14816494683093967

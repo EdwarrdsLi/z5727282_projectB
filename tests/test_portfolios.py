@@ -110,34 +110,28 @@ class TestWalkForwardBacktest(unittest.TestCase):
             self.assertTrue(np.allclose(sums.to_numpy(), 1.0, atol=1e-10))
             self.assertTrue((result.fund_weights["target_weight"] >= 0.0).all())
 
-    def test_future_returns_cannot_change_first_risk_parity_target(self) -> None:
-        baseline = portfolios.oos_backtest(
-            self.returns,
-            method=portfolios.RISK_PARITY,
-            estimation_window=10,
-            asset_classes=self.asset_classes,
-        )
-        first_live = baseline.fund_returns["date"].min()
-        changed = self.returns.copy()
-        changed.loc[first_live:, "BTC-USD"] = (
-            -4.0 * changed.loc[first_live:, "BTC-USD"]
-        )
-        alternative = portfolios.oos_backtest(
-            changed,
-            method=portfolios.RISK_PARITY,
-            estimation_window=10,
-            asset_classes=self.asset_classes,
-        )
-
-        baseline_first = baseline.fund_weights.loc[
-            baseline.fund_weights["rebalance_date"] == first_live,
-            ["ticker", "target_weight"],
-        ].set_index("ticker")
-        alternative_first = alternative.fund_weights.loc[
-            alternative.fund_weights["rebalance_date"] == first_live,
-            ["ticker", "target_weight"],
-        ].set_index("ticker")
-        pd.testing.assert_frame_equal(baseline_first, alternative_first)
+    def test_future_returns_cannot_change_first_optimised_target(self) -> None:
+        for method in (portfolios.RISK_PARITY, portfolios.MINIMUM_VARIANCE):
+            baseline = portfolios.oos_backtest(
+                self.returns, method=method, estimation_window=10,
+                asset_classes=self.asset_classes,
+            )
+            first_live = baseline.fund_returns["date"].min()
+            changed = self.returns.copy()
+            changed.loc[first_live:, "BTC-USD"] = -4.0 * changed.loc[first_live:, "BTC-USD"]
+            alternative = portfolios.oos_backtest(
+                changed, method=method, estimation_window=10,
+                asset_classes=self.asset_classes,
+            )
+            baseline_first = baseline.fund_weights.loc[
+                baseline.fund_weights["rebalance_date"] == first_live,
+                ["ticker", "target_weight"],
+            ].set_index("ticker")
+            alternative_first = alternative.fund_weights.loc[
+                alternative.fund_weights["rebalance_date"] == first_live,
+                ["ticker", "target_weight"],
+            ].set_index("ticker")
+            pd.testing.assert_frame_equal(baseline_first, alternative_first)
 
 
 class TestMetricsAndSchemas(unittest.TestCase):
@@ -151,7 +145,7 @@ class TestMetricsAndSchemas(unittest.TestCase):
         self.assertAlmostEqual(metrics["sharpe_ratio"], 1.0 / 3.0)
         self.assertAlmostEqual(metrics["maximum_drawdown"], -0.10)
 
-    def test_required_output_schemas_and_combined_funds(self) -> None:
+    def test_required_output_schemas_and_nine_fund_shelf(self) -> None:
         equity_dates = pd.bdate_range("2020-01-02", periods=75)
         crypto_dates = pd.date_range(equity_dates.min(), equity_dates.max(), freq="D")
         equity_step = np.arange(len(equity_dates), dtype=float)
@@ -182,6 +176,7 @@ class TestMetricsAndSchemas(unittest.TestCase):
             equities,
             crypto,
             estimation_window=10,
+            crypto_estimation_window=10,
         )
 
         self.assertEqual(list(artifacts.fund_returns), portfolios.FUND_RETURN_COLUMNS)
@@ -196,7 +191,22 @@ class TestMetricsAndSchemas(unittest.TestCase):
         )
         self.assertEqual(
             set(artifacts.performance_metrics["asset_family"]),
-            {"Combined equity + cryptocurrency"},
+            {"Equity only", "Cryptocurrency only", "Combined equity + cryptocurrency"},
+        )
+        self.assertEqual(artifacts.performance_metrics["fund_name"].nunique(), 9)
+        self.assertEqual(list(artifacts.fund_turnover), portfolios.FUND_TURNOVER_COLUMNS)
+        self.assertEqual(list(artifacts.fund_cost_check), portfolios.FUND_COST_CHECK_COLUMNS)
+        self.assertEqual(set(artifacts.fund_cost_check["cost_rate_bps_one_way"]), {0.0, 10.0})
+        self.assertTrue(
+            artifacts.fund_cost_check.loc[
+                artifacts.fund_cost_check["cost_rate_bps_one_way"].eq(10.0),
+                "net_final_growth_of_1",
+            ].le(
+                artifacts.fund_cost_check.loc[
+                    artifacts.fund_cost_check["cost_rate_bps_one_way"].eq(10.0),
+                    "gross_final_growth_of_1",
+                ]
+            ).all()
         )
         self.assertTrue(
             artifacts.performance_metrics["current_target_holdings_source"]

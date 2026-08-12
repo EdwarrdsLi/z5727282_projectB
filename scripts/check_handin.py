@@ -11,6 +11,12 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 oks, problems, warns = [], [], []
+LOCAL_ONLY_DIRECTORIES = {".git", ".venv", "venv"}
+
+
+def is_project_file(path: pathlib.Path) -> bool:
+    """Exclude local environments and Git internals from hand-in scans."""
+    return not LOCAL_ONLY_DIRECTORIES.intersection(path.relative_to(ROOT).parts)
 
 
 def check(cond, ok_msg, bad_msg):
@@ -43,24 +49,28 @@ check(bool(agent_edited), f"your own agent file ({', '.join(agent_edited) or 'no
 placeholder = "z" + "X" * 7
 placeholder_left = [
     str(p.relative_to(ROOT)) for p in ROOT.rglob("*")
-    if p.is_file() and p.suffix.lower() in {".md", ".py", ".txt", ".toml"}
+    if p.is_file() and is_project_file(p)
+    and p.suffix.lower() in {".md", ".py", ".txt", ".toml"}
     and placeholder in p.read_text(encoding="utf-8", errors="ignore")
 ]
 check(not placeholder_left, "no leftover zID placeholder",
       f"placeholder {placeholder} still in: {placeholder_left[:3]}")
 
 data_files = [str(p.relative_to(ROOT)) for p in ROOT.rglob("*")
-              if p.suffix.lower() in {".parquet", ".csv"} and "results" not in p.parts]
+              if is_project_file(p) and p.suffix.lower() in {".parquet", ".csv"}
+              and "results" not in p.relative_to(ROOT).parts]
 check(not data_files, "no committed data files",
       f"data files should not be committed: {data_files[:3]}")
 
 junk = [str(p.relative_to(ROOT)) for p in ROOT.rglob("*")
-        if p.is_file() and (".tmp." in p.name or p.name in {".DS_Store", "Thumbs.db"})]
+        if p.is_file() and is_project_file(p)
+        and (".tmp." in p.name or p.name in {".DS_Store", "Thumbs.db"})]
 check(not junk, "no stray editor-backup or OS-junk files",
       f"remove these before zipping: {junk[:3]}")
 
 pycache = [str(p.relative_to(ROOT)) for p in ROOT.rglob("*")
-           if p.is_file() and (p.suffix == ".pyc" or "__pycache__" in p.parts)]
+           if p.is_file() and is_project_file(p)
+           and (p.suffix == ".pyc" or "__pycache__" in p.parts)]
 warn(not pycache, "no compiled-Python clutter",
      "delete __pycache__/ and *.pyc before you zip - they are auto-generated and not needed")
 

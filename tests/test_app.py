@@ -22,8 +22,9 @@ class TestAppDataLoading(unittest.TestCase):
         self.assertEqual(set(loaded), set(app_data.APP_CSV_PATHS))
         self.assertEqual(
             set(loaded["fund_returns"]["fund_name"]),
-            {"Combined Equal Weight", "Combined Risk Parity"},
+            set(app_data.FUND_NAMES),
         )
+        self.assertEqual(len(loaded["performance_metrics"]), 9)
         self.assertLessEqual(
             loaded["fund_returns"]["date"].max(), app_data.MAX_APPROVED_DATE
         )
@@ -49,10 +50,12 @@ class TestAppDataLoading(unittest.TestCase):
             fund_returns, 1_000.0, {"Fund A": 0.25, "Fund B": 0.75}
         )
 
-        self.assertAlmostEqual(paths["Custom allocation"].iloc[-1], 1_050.0)
+        expected = 1_000.0 * (0.25 * (1.20 / 1.10) + 0.75 * (1.00 / 0.90))
+        self.assertAlmostEqual(paths["Custom allocation"].iloc[0], 1_000.0)
+        self.assertAlmostEqual(paths["Custom allocation"].iloc[-1], expected)
         custom = summary.loc[summary["Scenario"].eq("Custom allocation")].iloc[0]
-        self.assertAlmostEqual(custom["Historical ending value"], 1_050.0)
-        self.assertAlmostEqual(custom["Historical return"], 0.05)
+        self.assertAlmostEqual(custom["Historical ending value"], expected)
+        self.assertAlmostEqual(custom["Historical return"], expected / 1_000.0 - 1.0)
 
 
 class TestAppSectionsAndDeploymentBoundary(unittest.TestCase):
