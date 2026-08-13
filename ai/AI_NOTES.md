@@ -83,7 +83,10 @@ explanation. The final argument and submitted wording remain my responsibility.
 
 ## How I checked the work
 
-I did not treat an AI answer as evidence. The checks included:
+I did not treat an AI answer as evidence. I asked Codex to run and record the
+technical checks, then reviewed the reported outputs, failures, figures and
+resulting artifacts before deciding whether to approve a change. Codex executed
+and reported:
 
 - focused unit and integration tests for calendars, return construction,
   temporal separation, portfolio constraints, metrics, sentiment aggregation
@@ -95,8 +98,15 @@ I did not treat an AI answer as evidence. The checks included:
   artifacts;
 - checks of fund counts, target sums, non-negative weights, date caps, required
   files and transaction-cost arithmetic;
-- comparison of report and app figures with the saved CSV evidence; and
-- logged-out checks of the public GitHub repository and Streamlit app.
+- comparison of report and app figures with the saved CSV evidence.
+
+These command-line checks are evidence I reviewed, not tasks I claim to have run
+manually. I personally reviewed the app in the browser, supplied screenshots,
+identified visible problems, read the final report and results, and completed
+the GitHub and Streamlit actions that required my accounts. I also opened the
+public repository and deployed app while logged out to confirm that they were
+accessible. I used this combined evidence to approve corrections and the final
+project.
 
 ## Where AI output was wrong or risky
 
