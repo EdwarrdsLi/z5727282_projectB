@@ -1,5 +1,14 @@
 # AI workflow log v2.00 - R0 project constitution
 
+## Student direction and authorship clarification - 14 August 2026
+
+The student supplied the initial project workflow, integrity rules, technical
+red lines and acceptance checks before implementation. Codex converted those
+requirements into the first structured wording of AGENTS.md; it did not choose
+the project purpose, evidence standard or division of responsibility. The
+student reviewed the constitution, retained the rules that matched the intended
+project and remained the final authority for later design choices.
+
 ## Phase and date
 
 - Phase: R0 project constitution

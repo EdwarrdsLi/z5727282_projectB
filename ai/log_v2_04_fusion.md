@@ -1,5 +1,14 @@
 # AI workflow log v2.04 - R4 sentiment fusion
 
+## Student direction and authorship clarification - 14 August 2026
+
+The fusion objective, no-look-ahead requirement, equity-only scope and rule that
+negative results must be reported honestly came from the student's original
+workflow. The student then reviewed the initial evidence and approved the final
+base fund, 0.5 tilt, missing-signal treatment, turnover checks, cost sensitivity
+and robustness grid. Codex provided implementation and verification support.
+The decision not to tune away the weaker fusion result was the student's.
+
 ## Phase and date
 
 - Phase: R4 look-ahead-safe equity sentiment fusion

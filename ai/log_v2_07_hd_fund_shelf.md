@@ -1,5 +1,14 @@
 # AI assistance log v2.07 — nine-fund HD expansion
 
+## Student direction and authorship clarification - 14 August 2026
+
+The student's original workflow already required an evidence-based extension
+beyond the minimum baseline. After reviewing the marking criteria, the student
+chose the HD objective and approved the final form of the extension: a nine-fund
+shelf, three asset families, three portfolio methods, native-calendar evidence,
+turnover and transaction-cost sensitivity. Codex helped implement and test that
+approved design; it did not independently make the final product decision.
+
 ## Student request and approval
 
 The student asked for a marking-criteria review, selected the goal of pursuing an

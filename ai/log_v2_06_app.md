@@ -1,5 +1,14 @@
 # AI workflow log v2.06 - R6 Streamlit investor app
 
+## Student direction and authorship clarification - 14 August 2026
+
+The student supplied the intended investor journey and the results-only
+deployment boundary before the app was built. Codex implemented the initial
+Streamlit structure and focused tests. The student reviewed the live interface,
+made the consequential product decisions, supplied screenshots, completed
+account-authenticated browser actions and approved or requested interface
+changes. AI implementation did not replace the student's product judgement.
+
 ## Phase and date
 
 - Phase: R6 results-only Streamlit investor app

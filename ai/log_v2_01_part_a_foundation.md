@@ -1,5 +1,13 @@
 # AI workflow log v2.01 - R1 Part A foundation
 
+## Student direction and authorship clarification - 14 August 2026
+
+The decision to reuse the student's own verified Part A foundation, and the
+boundaries on what could be changed, came from the student. Codex assisted with
+the technical adaptation, focused tests and documentation. The student retained
+ownership of the data-treatment decisions and used the test evidence to decide
+whether the foundation was acceptable for the later portfolio work.
+
 ## Phase and date
 
 - Phase: R1 integration of the student's own Part A data foundation

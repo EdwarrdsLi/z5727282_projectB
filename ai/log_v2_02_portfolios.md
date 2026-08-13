@@ -1,5 +1,17 @@
 # AI workflow log v2.02 - R2 portfolios and walk-forward backtests
 
+## Student direction and authorship clarification - 14 August 2026
+
+The student-supplied workflow had already set the core portfolio requirements:
+native calendars, genuine prior estimation data, monthly walk-forward OOS
+testing, no look-ahead, family-specific annualisation, portfolio constraints and
+fund fact sheets. Codex translated those requirements into an initial
+implementation and proposed reproducible technical details where the workflow
+did not fix a number or solver. Those details, including the final methods,
+window, shrinkage and constraints, remained subject to student review and
+approval. They are implementation assistance, not AI-selected economic
+conclusions.
+
 ## Phase and date
 
 - Phase: R2 portfolio construction and walk-forward out-of-sample backtesting

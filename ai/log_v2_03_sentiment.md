@@ -1,5 +1,15 @@
 # AI workflow log v2.03 - R3 descriptive headline sentiment
 
+## Student direction and authorship clarification - 14 August 2026
+
+The student had already chosen the main sentiment controls in the supplied
+workflow: VADER on original supplied equity headlines, ticker-day then
+equal-weighted sector aggregation, an explicit no-news rule, at least a
+one-observed-equity-day lag, and no direct cryptocurrency sentiment. Codex
+implemented and tested this specification. The student retained the final
+decision on the missing-news treatment, the interpretation of the index and
+whether the evidence was suitable for the report.
+
 ## Phase and date
 
 - Phase: R3 VADER headline scoring and descriptive sector sentiment index

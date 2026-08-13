@@ -1,5 +1,15 @@
 # AI workflow log v2.05 - R5 report exhibits and fund fact sheets
 
+## Student direction and authorship clarification - 14 August 2026
+
+The student specified the required exhibit families, investor-facing purpose,
+visual checks, labels, units, source lines and sample-period requirements. Codex
+generated the initial figures and tests from the verified artifacts. The
+student's browser and document review determined whether the figures were
+readable and acceptable; screenshots supplied by the student led to later
+display corrections. Report interpretation and final caption wording remained
+the student's responsibility.
+
 ## Phase and date
 
 - Phase: R5 report-ready exhibits and factual fund fact sheets

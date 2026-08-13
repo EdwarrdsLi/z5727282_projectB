@@ -14,3 +14,5 @@ What to put here:
 Your own agent instruction files live at the project root (AGENTS.md / CLAUDE.md /
 .claude / GEMINI.md, whichever your tool uses). Replace the provided stubs with
 your own.
+
+The dated phase logs preserve the original prompts and technical record. Later authorship clarifications are explicitly dated rather than replacing the historical prompt text.
